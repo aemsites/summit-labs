@@ -1,0 +1,80 @@
+.sitenav {
+  grid-area: sitenav;
+  padding: 32px 36px 36px;
+  font-size: 14px;
+
+  a.docket-brand-logo {
+    display: block;
+    margin-bottom: calc(36px + 12px);
+  }
+
+  svg {
+    display: block;
+    height: 28px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0 0 0 12px;
+    box-sizing: border-box;
+    list-style: none;
+
+    > li > ul {
+      margin-right: 16px;
+      display: none;
+    }
+
+    &.is-open {
+      > li > .expand-tree {
+        transform: rotate(90deg);
+      }
+
+      > li > ul {
+        display: block;
+      }
+    }
+  }
+
+  li {
+    margin-block: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    ul {
+      flex: 1 0 100%;
+    }
+  }
+
+  /* First Level */
+  > ul {
+    padding: 0;
+  }
+
+  .expand-tree {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background-color: transparent;
+    width: 16px;
+    height: 16px;
+    color: var(--s2-gray-500);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  a {
+    display: block;
+    margin-right: 16px;
+  }
+}
+
+@media (width >= 900px) {
+  .sitenav {
+    display: block;
+  }
+}

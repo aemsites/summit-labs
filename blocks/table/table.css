@@ -1,0 +1,44 @@
+.table {
+  font-size: 14px;
+  border-radius: 12px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+
+  table {
+    margin: -4px;
+    border-collapse: collapse;
+    width: calc(100% + 8px);
+  }
+
+  td {
+    border: 4px solid light-dark(#fff, #000);
+    color: light-dark(#000, #fff);
+    background-color: light-dark(var(--s2-gray-100), var(--s2-gray-800));
+    padding: 16px;
+    white-space: normal;
+    min-width: 150px;
+    vertical-align: top;
+
+    pre {
+      margin: 0;
+    }
+
+    code {
+      white-space: normal;
+    }
+  }
+
+  .table-heading-row {
+    font-weight: 700;
+
+    td {
+      background-color: light-dark(var(--s2-gray-200), var(--s2-gray-700));
+    }
+  }
+
+  &.fixed {
+    table {
+      table-layout: fixed;
+    }
+  }
+}
