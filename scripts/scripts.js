@@ -1,4 +1,4 @@
-import { loadArea, loadStyle, loadBlock, setConfig } from './nx.js';
+import { loadArea, loadBlock, setConfig } from './nx.js';
 
 // Supported locales
 const locales = {
@@ -22,6 +22,16 @@ const decorateArea = ({ area = document }) => {
   eagerLoad(area, 'img');
 };
 
+function detectTutorial() {
+  const { classList } = document.body;
+  if (!classList.contains('tutorial-template')) return;
+  const section = document.createElement('div');
+  const block = document.createElement('div');
+  block.className = 'tutorial-nav';
+  section.append(block);
+  document.querySelector('main').append(section);
+}
+
 const loadNav = async (name) => {
   const position = name === 'sitenav' ? 'beforebegin' : 'afterend';
   const main = document.querySelector('main');
@@ -36,6 +46,7 @@ const loadNav = async (name) => {
   setConfig({ locales, widgets, decorateArea });
 
   loadNav('sitenav');
+  detectTutorial();
   await loadArea();
   await loadNav('pagenav');
 }());

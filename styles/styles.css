@@ -165,6 +165,13 @@ pre {
   overflow: scroll;
 }
 
+blockquote {
+  margin: 0;
+  padding: 1em 0 1em 2em;
+  border-left: 2px solid light-dark(var(--dark-main-link), var(--light-main-link));
+  box-sizing: border-box;
+}
+
 .docket-site-nav {
   display: none;
 }
@@ -247,38 +254,36 @@ img {
 
 @media (width >= 900px) {
   body {
-    &.docs-template {
-      display: grid;
-      grid-template:
-        "sitenav header header" auto
-        "sitenav main pagenav" 1fr
-        "sitenav footer footer" auto / 300px minmax(0, 1fr) 300px;
-      justify-content: start;
-      min-height: 100vh;
+    display: grid;
+    grid-template:
+      "sitenav header header" auto
+      "sitenav main pagenav" 1fr
+      "sitenav footer footer" auto / 300px minmax(0, 1fr) 300px;
+    justify-content: start;
+    min-height: 100vh;
 
-      header {
-        grid-area: header;
-      }
+    header {
+      grid-area: header;
+    }
 
-      .sitenav {
-        display: block;
-        grid-area: sitenav;
-        background-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
-      }
+    .sitenav {
+      display: block;
+      grid-area: sitenav;
+      background-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+    }
 
-      main {
-        grid-area: main;
-        margin: 0 72px;
-      }
+    main {
+      grid-area: main;
+      margin: 0 72px;
+    }
 
-      .pagenav {
-        display: block;
-        grid-area: pagenav;
-      }
+    .pagenav {
+      display: block;
+      grid-area: pagenav;
+    }
 
-      footer {
-        grid-area: footer;
-      }
+    footer {
+      grid-area: footer;
     }
   }
 }
