@@ -42,11 +42,27 @@ const loadNav = async (name) => {
   await loadBlock(nav);
 };
 
+function setColorScheme() {
+  const { classList } = document.body;
+  const hasScheme = classList.contains('light-theme') || classList.contains('dark-theme');
+  if (hasScheme) return;
+  const scheme = matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark-theme'
+    : 'light-theme';
+  classList.add(scheme);
+}
+
 (async function loadPage() {
   setConfig({ locales, widgets, decorateArea });
 
-  loadNav('sitenav');
+  // Project functions
+  setColorScheme();
   detectTutorial();
+
+  // AK functions
   await loadArea();
-  await loadNav('pagenav');
+
+  // Lazy project functions
+  loadNav('sitenav');
+  loadNav('pagenav');
 }());
