@@ -12,6 +12,17 @@ const widgets = [
   { youtube: 'https://www.youtube' },
 ];
 
+function decorateLinks(area) {
+  const anchors = area.querySelectorAll('a');
+  for (const a of anchors) {
+    const { href } = a;
+    const { origin } = new URL(href);
+    if (origin !== window.location.origin) {
+      a.setAttribute('target', '_blank');
+    }
+  }
+}
+
 // How to decorate an area before loading it
 const decorateArea = ({ area = document }) => {
   const eagerLoad = (parent, selector) => {
@@ -19,6 +30,7 @@ const decorateArea = ({ area = document }) => {
     img?.removeAttribute('loading');
   };
 
+  decorateLinks(area);
   eagerLoad(area, 'img');
 };
 
