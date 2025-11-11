@@ -25,7 +25,6 @@ const getMetadata = (el) => [...el.childNodes].reduce((rdx, row) => {
 }, {});
 
 export default function init(el) {
-  console.log(el.innerHTML);
   // Get text details
   const metadata = getMetadata(el);
   const placeholderText = metadata.placeholder.text;
