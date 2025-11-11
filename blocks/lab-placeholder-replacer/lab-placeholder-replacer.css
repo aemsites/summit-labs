@@ -1,0 +1,38 @@
+.lab-placeholder-replacer {
+  margin-bottom: 32px;
+  padding: var(--spacing-l);
+  border-radius: 8px;
+  border: 1px solid light-dark(var(--s2-gray-200), var(--s2-gray-800));
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin: 0 0 12px;
+  }
+}
+
+.replacer-input-wrapper {
+  display: flex;
+  justify-content: stretch;
+  gap: 8px;
+
+  input {
+    display: block;
+    flex: 1 0 auto;
+  }
+
+  .replacer-actions {
+    display: flex;
+    gap: 8px;
+    width: 140px;
+
+    button {
+      flex: 1 0 auto;
+    }
+  }
+}
+
+.replacer-preview {
+  margin-bottom: 0;
+}

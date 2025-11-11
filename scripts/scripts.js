@@ -64,12 +64,22 @@ function setColorScheme() {
   classList.add(scheme);
 }
 
-(async function loadPage() {
-  setConfig({ locales, widgets, decorateArea });
+function setLabPlaceholders() {
+  const org = localStorage.getItem('lab-org');
+  const site = localStorage.getItem('lab-site');
+  if (!(site || org)) return;
+  document.body.outerHTML = document.body.outerHTML
+    .replaceAll('{ORG}', org)
+    .replaceAll('{SITE}', site);
+}
 
+(async function loadPage() {
   // Project functions
+  setLabPlaceholders();
   setColorScheme();
   detectTutorial();
+
+  setConfig({ locales, widgets, decorateArea });
 
   // AK functions
   await loadArea();
