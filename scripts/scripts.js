@@ -70,7 +70,9 @@ function setLabPlaceholders() {
   if (!(site || org)) return;
   document.body.outerHTML = document.body.outerHTML
     .replaceAll('{ORG}', org)
-    .replaceAll('{SITE}', site);
+    .replaceAll('{SITE}', site)
+    .replaceAll('%7BORG%7D', org)
+    .replaceAll('%7BSITE%7D', site);
 }
 
 (async function loadPage() {
