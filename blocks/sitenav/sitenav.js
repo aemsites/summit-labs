@@ -37,8 +37,21 @@ function generateSiteList(siteData, pathname) {
 }
 
 function formatSiteData(pageData) {
-  const root = pageData.reduce((acc, item) => {
-    const segments = item.path.substring(1).split('/');
+  // Sort so that index pages (trailing slash) are processed last
+  const sorted = [...pageData].sort((a, b) => {
+    const aIsIndex = a.path.endsWith('/');
+    const bIsIndex = b.path.endsWith('/');
+    if (aIsIndex && !bIsIndex) return 1;
+    if (!aIsIndex && bIsIndex) return -1;
+    return 0;
+  });
+
+  const root = sorted.reduce((acc, item) => {
+    // Normalize path: remove trailing slash
+    const normalizedPath = item.path.replace(/\/$/, '');
+    const segments = normalizedPath.substring(1).split('/').filter(Boolean);
+
+    if (segments.length === 0) return acc;
 
     let currentNode = acc;
 
@@ -55,7 +68,7 @@ function formatSiteData(pageData) {
         };
       }
 
-      // If this is the last segment, mark as endpoint and set title
+      // If this is the last segment, set title and path
       if (index === segments.length - 1) {
         currentNode[segment].title = item.title;
         currentNode[segment].path = item.path;
@@ -90,6 +103,7 @@ export default async function init(el) {
   try {
     const { pathname } = window.location;
     const siteData = await fetchSiteData();
+    console.log(siteData);
     const formatted = formatSiteData(siteData);
     const siteList = generateSiteList(formatted, pathname);
     el.append(...siteList);

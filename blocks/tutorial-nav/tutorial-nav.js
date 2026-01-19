@@ -35,13 +35,11 @@ function buildCard(direction, entry) {
 }
 
 function getMainNext(pageList, pathname) {
-  let nextEntry = pageList.find((page) => page.path === `${pathname}/1`);
+  // Determine if the tree is index based (page-name/) or name base (page-name)
+  const sanitizedPath = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  let nextEntry = pageList.find((page) => page.path === `${sanitizedPath}/1`);
   if (!nextEntry) {
-    nextEntry = {
-      path: `${pathname}/1`,
-      title: 'Next step not found',
-      description: `Please publish or create ${pathname}/1`,
-    };
+    return null;
   }
   const nextCard = buildCard('Next', nextEntry);
   const nav = document.createElement('nav');
@@ -56,11 +54,13 @@ function getNumNextPrev(pageList, pathSplit, pagenum) {
   const basePath = `/${pathSplit.join('/')}`;
 
   const prevPath = pagenum === 1 ? basePath : `${basePath}/${pagenum - 1}`;
-  const prevEntry = pageList.find((page) => page.path === prevPath);
+  console.log(prevPath);
+
+  const prevEntry = pageList.find((page) => page.path === prevPath || page.path === `${prevPath}/`);
   if (prevEntry) cards.push(buildCard('Previous', prevEntry));
 
   const nextPath = `${basePath}/${pagenum + 1}`;
-  const nextEntry = pageList.find((page) => page.path === nextPath);
+  let nextEntry = pageList.find((page) => page.path === nextPath || page.path === `${basePath}/conclusion`);
   if (nextEntry) cards.push(buildCard('Next', nextEntry));
 
   const cardCountClass = cards.length === 1 ? 'one-card' : '';
@@ -68,6 +68,7 @@ function getNumNextPrev(pageList, pathSplit, pagenum) {
   const nav = document.createElement('nav');
   nav.className = `tutorial-nav ${cardCountClass}`;
   nav.append(...cards);
+
   return nav;
 }
 
@@ -75,11 +76,19 @@ export default async function init(el) {
   const pageList = await fetchSiteData();
 
   const { pathname } = window.location;
-  const pathSplit = pathname.slice(1).split('/');
+
+  const toSplit = pathname.endsWith('/') ? pathname.slice(1).slice(0, -1) : pathname.slice(1);
+
+  const pathSplit = toSplit.split('/');
+
   const pagename = pathSplit.pop();
+  
   const pagenum = getNumber(pagename);
   const nav = pagenum
     ? getNumNextPrev(pageList, pathSplit, pagenum)
     : getMainNext(pageList, pathname);
+
+  // If no nav, do nothing
+  if (!nav) return;
   el.append(nav);
 }
