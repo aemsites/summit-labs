@@ -17,8 +17,10 @@ function createCards(siteData) {
   const cards = Object.keys(siteData).reduce((acc, key) => {
     const isPage = siteData[key].path === window.location.pathname;
     const notDescendant = !siteData[key].path.startsWith(window.location.pathname);
+    const lastSegment = siteData[key].path.split('/').pop();
+    const isNumberOnly = /^\d+$/.test(lastSegment);
 
-    if (isPage || notDescendant) return acc;
+    if (isPage || notDescendant || isNumberOnly) return acc;
 
     const card = document.createElement('li');
     card.classList.add('docket-page-list-card');
