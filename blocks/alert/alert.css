@@ -1,0 +1,14 @@
+.alert {
+    background-color: var(--s2-blue-900);
+    color: #fff;
+
+    &.warning {
+        background-color: var(--s2-red-900);
+
+    }
+
+    &.caution {
+        background-color: var(--s2-yellow-700);
+    }
+
+}

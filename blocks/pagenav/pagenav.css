@@ -1,4 +1,7 @@
 .pagenav {
+  position: sticky;
+  top: 24px;
+  align-self: start;
   padding-right: 36px;
   color: light-dark(var(--s2-gray-700), var(--s2-gray-500));
 
