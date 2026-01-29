@@ -57,7 +57,28 @@ async function decorate(el) {
 
     const code = row.querySelector('code');
     code.classList.add(`language-${type}`);
-    code.closest('div').classList.add('code-container');
+
+    // Get the text before the code block is decorated
+    const toCopy = code.textContent;
+
+    const codeContainer = code.closest('div');
+    codeContainer.classList.add('code-container');
+
+    const copyBtn = document.createElement('button');
+    copyBtn.className = 'copy-code-btn';
+    copyBtn.textContent = 'Copy';
+    copyBtn.addEventListener('click', () => {
+      const blob = new Blob([toCopy], { type: 'text/plain' });
+      const data = [new ClipboardItem({ [blob.type]: blob })];
+      navigator.clipboard.write(data);
+      copyBtn.textContent = 'Copied';
+      copyBtn.classList.toggle('is-copied');
+      setTimeout(() => {
+        copyBtn.textContent = 'Copy';
+        copyBtn.classList.toggle('is-copied');
+      }, 2000);
+    });
+    codeContainer.append(copyBtn);
 
     return new Promise((resolve) => {
       window.Prism.highlightElement(code, false, () => { resolve(); });

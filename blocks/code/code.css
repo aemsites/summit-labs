@@ -48,6 +48,24 @@
   .code-container {
     display: grid;
     grid-template-columns: 1fr;
+    position: relative;
+
+    .copy-code-btn {
+      position: absolute;
+      padding: 2px 8px;
+      top: 1em;
+      right: 0.5em;
+      border: none;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+      background: light-dark(var(--s2-gray-400), var(--s2-gray-800));
+
+      &.is-copied {
+        background: light-dark(var(--s2-green-600), var(--s2-green-900));
+      }
+    }
   }
 
   &.is-highlighted {

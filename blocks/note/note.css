@@ -1,0 +1,16 @@
+.note {
+  background-color: var(--s2-blue-900);
+  color: #fff;
+  margin-block: 16px;
+  padding: 16px;
+  border-radius: 8px;
+
+  &.warning {
+    background-color: var(--s2-red-900);
+  }
+
+  &.caution {
+    background-color: var(--s2-yellow-300);
+    color: var(--s2-yellow-700);
+  }
+}
