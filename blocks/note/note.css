@@ -1,16 +1,23 @@
 .note {
-  background-color: var(--s2-blue-900);
-  color: #fff;
+  background-color: #f3f7fc;
+  color: #000;
   margin-block: 16px;
   padding: 16px;
   border-radius: 8px;
+  border-left: 4px solid #1861bb;
 
   &.warning {
-    background-color: var(--s2-red-900);
+    background-color: #fdf1f2;
+    border-left: 4px solid #e14f62;
   }
 
   &.caution {
-    background-color: var(--s2-yellow-300);
-    color: var(--s2-yellow-700);
+    background-color: #fdf4c1;
+    border-left: 4px solid #ffc32d;
+  }
+
+  &.success {
+    background-color: #effdf5;
+    border-left: 4px solid #55b685;
   }
 }
