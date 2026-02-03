@@ -54,7 +54,7 @@
   --light-main-link: #ea998f;
   --dark-color: #0e0e0e;
   --dark-link: #3f3f3f;
-  --dark-main-link: #d73220;
+  --dark-main-link: var(--s2-blue-1000);
 
   /* Spectrum 2 Colors */
   --s2-cyan-800: #0086b4;
@@ -158,9 +158,10 @@ main {
   p > code,
   li > code {
     font-size: 14px;
-    padding: 6px 8px;
+    padding: 2px 6px;
     border-radius: 6px;
     background-color: light-dark(#efefef, #292929);
+    border: 1px solid #cecece;
   }
 }
 
@@ -290,6 +291,11 @@ img {
     main {
       grid-area: main;
       margin: 0 72px;
+
+      /* Default main content image decoration */
+      img {
+        box-shadow: 0 4px 16px 4px rgb(0 0 0 / 20%);
+      }
     }
 
     .pagenav {

@@ -28,6 +28,12 @@ function createCards(siteData) {
     const link = document.createElement('a');
     link.href = siteData[key].path;
 
+    const img = document.createElement('img');
+    img.src = 'https://summit.adobe.com/_assets/images/sessions/mosaic-1-desktop@2x.jpg';
+
+    const textContainer = document.createElement('div');
+    textContainer.className = 'docket-page-list-card-text-container';
+
     const title = document.createElement('p');
     title.classList.add('docket-page-list-card-title');
     title.innerText = siteData[key].title;
@@ -36,7 +42,8 @@ function createCards(siteData) {
     description.classList.add('docket-page-list-card-description');
     description.innerText = siteData[key].description;
 
-    link.append(title, description);
+    textContainer.append(title, description);
+    link.append(img, textContainer);
     card.append(link);
     acc.push(card);
 
