@@ -85,6 +85,8 @@ function setLabPlaceholders() {
 
   // AK functions
   await loadArea();
+  const { initLabCredentials } = await import('./lab-credentials.js');
+  await initLabCredentials();
 
   // Lazy project functions
   loadNav('sitenav');
