@@ -23,15 +23,15 @@ export class LabCredentials {
         cache: 'no-store',
         signal: AbortSignal.timeout(3000)
       });
-      
+
       if (response.ok) {
         this.email = (await response.text()).trim();
-        
+
         if (!this.email) {
           console.warn('Received empty credentials from server');
           return false;
         }
-        
+
         this.parseEmail();
         return true;
       } else if (response.status === 503) {
@@ -39,7 +39,7 @@ export class LabCredentials {
         return false;
       }
     } catch (error) {
-      console.error('Could not load lab credentials:', error);
+      console.log('Could not load lab credentials.');
       return false;
     }
     return false;
@@ -61,26 +61,26 @@ export class LabCredentials {
    * Get full email address
    * @returns {string|null} Email address (e.g., "L120-05@adobeeventlab.com")
    */
-  getEmail() { 
-    return this.email; 
+  getEmail() {
+    return this.email;
   }
-  
+
   /**
    * Get lab ID
    * @returns {string|null} Lab ID (e.g., "L120")
    */
-  getLabId() { 
-    return this.labId; 
+  getLabId() {
+    return this.labId;
   }
-  
+
   /**
    * Get seat number
    * @returns {string|null} Seat number (e.g., "05")
    */
-  getSeatNumber() { 
-    return this.seatNumber; 
+  getSeatNumber() {
+    return this.seatNumber;
   }
-  
+
   /**
    * Get consistent identifier for naming resources
    * @param {string} suffix - Optional suffix to append
@@ -170,7 +170,7 @@ export function replacePlaceholdersInElement(creds, root = null) {
 export async function initLabCredentials() {
   const creds = new LabCredentials();
   const success = await creds.load();
-  
+
   if (success) {
     populateEmailFields(creds.getEmail());
     updateLoginLinks(creds.getEmail());
@@ -179,7 +179,7 @@ export async function initLabCredentials() {
 
     // Make credentials available globally
     window.labCredentials = creds;
-    
+
     // Dispatch event for other scripts that need credentials
     window.dispatchEvent(new CustomEvent('lab-credentials-loaded', {
       detail: { credentials: creds }
@@ -187,7 +187,7 @@ export async function initLabCredentials() {
   } else {
     showCredentialsNotReady();
   }
-  
+
   return creds;
 }
 
@@ -201,7 +201,7 @@ function populateEmailFields(email) {
     input.setAttribute('readonly', true);
     input.classList.add('auto-populated');
   });
-  
+
   // Display email in text elements
   document.querySelectorAll('[data-lab-email-display]').forEach(elem => {
     elem.textContent = email;

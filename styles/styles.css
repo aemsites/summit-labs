@@ -1,7 +1,7 @@
 @font-face {
     font-family: adobe-clean;
     src: url("https://use.typekit.net/af/59b220/00000000000000007735dac8/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n4&v=3") format("woff2");
-    font-display: optional;
+    font-display: swap;
     font-style: normal;
     font-weight: 400;
     font-stretch: normal;
@@ -10,7 +10,7 @@
 @font-face {
     font-family: adobe-clean;
     src: url("https://use.typekit.net/af/597099/00000000000000007735dacd/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i4&v=3") format("woff2");
-    font-display: optional;
+    font-display: swap;
     font-style: italic;
     font-weight: 400;
     font-stretch: normal;
@@ -19,7 +19,7 @@
 @font-face {
     font-family: adobe-clean;
     src: url("https://use.typekit.net/af/55f17d/00000000000000007735dad8/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=n7&v=3") format("woff2");
-    font-display: optional;
+    font-display: swap;
     font-style: normal;
     font-weight: 700;
     font-stretch: normal;
@@ -28,7 +28,7 @@
 @font-face {
     font-family: adobe-clean;
     src: url("https://use.typekit.net/af/152d2a/00000000000000007735dada/31/l?primer=7cdcb44be4a7db8877ffa5c0007b8dd865b3bbc383831fe2ea177f62257a9191&fvd=i7&v=3") format("woff2");
-    font-display: optional;
+    font-display: swap;
     font-style: italic;
     font-weight: 700;
     font-stretch: normal;

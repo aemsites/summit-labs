@@ -2,6 +2,8 @@ import { getConfig } from '../../scripts/nx.js';
 
 const { codeBase } = getConfig();
 
+const DEFAULT_IMAGE = 'https://adobelabs.dev/media_197fd103d3332517ce59fb4590f838b4290bae8f9.png';
+
 async function fetchSiteData() {
   const resp = await fetch(`${codeBase}/query-index.json`);
   if (!resp.ok) throw Error('Could not fetch query index');
@@ -28,9 +30,11 @@ function createCards(siteData) {
     const link = document.createElement('a');
     link.href = siteData[key].path;
 
+    const imgContainer = document.createElement('div');
+    imgContainer.className = 'docket-page-list-card-image';
     const img = document.createElement('img');
-    img.src = 'https://summit.adobe.com/_assets/images/sessions/mosaic-1-desktop@2x.jpg';
-
+    img.src = DEFAULT_IMAGE;
+    imgContainer.append(img);
     const textContainer = document.createElement('div');
     textContainer.className = 'docket-page-list-card-text-container';
 
@@ -43,7 +47,7 @@ function createCards(siteData) {
     description.innerText = siteData[key].description;
 
     textContainer.append(title, description);
-    link.append(img, textContainer);
+    link.append(imgContainer, textContainer);
     card.append(link);
     acc.push(card);
 

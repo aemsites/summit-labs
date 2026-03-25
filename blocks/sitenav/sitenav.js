@@ -7,17 +7,24 @@ const EXP_ICON = `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" xm
 
 const { codeBase } = getConfig();
 
-function generateSiteList(siteData, pathname) {
+function getTitle(page) {
+  if (page.labNumber) return `${page.labNumber}: ${page.title}`;
+
+  return page.title;
+}
+
+function generateSiteList(siteData, pathname, level = 1) {
   return Object.keys(siteData).map((key) => {
     const ul = document.createElement('ul');
+    ul.classList.add(`level-${level}`);
 
     const inPath = pathname.startsWith(siteData[key].path);
     if (inPath) ul.classList.add('is-open');
 
     const li = document.createElement('li');
     const a = document.createElement('a');
-    a.innerText = siteData[key].title;
     a.href = siteData[key].path;
+    a.textContent = getTitle(siteData[key]);
     li.append(a);
 
     if (Object.keys(siteData[key].children).length > 0) {
@@ -28,7 +35,7 @@ function generateSiteList(siteData, pathname) {
       btn.addEventListener('click', () => {
         btn.closest('ul').classList.toggle('is-open');
       });
-      const children = generateSiteList(siteData[key].children, pathname);
+      const children = generateSiteList(siteData[key].children, pathname, level + 1);
       li.append(btn, ...children);
     }
     ul.append(li);
@@ -72,6 +79,7 @@ function formatSiteData(pageData) {
       if (index === segments.length - 1) {
         currentNode[segment].title = item.title;
         currentNode[segment].path = item.path;
+        currentNode[segment].labNumber = item.labNumber;
       }
 
       currentNode = currentNode[segment].children;
@@ -103,7 +111,6 @@ export default async function init(el) {
   try {
     const { pathname } = window.location;
     const siteData = await fetchSiteData();
-    console.log(siteData);
     const formatted = formatSiteData(siteData);
     const siteList = generateSiteList(formatted, pathname);
     el.append(...siteList);

@@ -71,6 +71,17 @@
     flex: 1 1 0%;
     display: block;
     margin-right: 16px;
+    overflow: hidden;
+  }
+
+  .level-2 > li > a {
+    flex: 1 1 0%;
+    display: block;
+    margin-right: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100px;
   }
 }
 
