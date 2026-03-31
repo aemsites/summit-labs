@@ -53,6 +53,8 @@ async function decorateActions(section) {
   const discord = decorateLink(section, 'discord.com', 'discord');
   const github = decorateLink(section, 'github.com', 'github');
   await Promise.all([color, discord, github]);
+  const nxProfile = await (await import('../profile/profile.js')).default();
+  section.append(nxProfile);
 }
 
 async function decorateHeader(fragment) {

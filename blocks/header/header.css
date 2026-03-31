@@ -29,6 +29,7 @@ header {
 
 header .actions-section {
   justify-self: end;
+  gap: var(--spacing-m);
 
   .default-content {
     display: flex;
