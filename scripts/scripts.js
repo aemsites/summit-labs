@@ -1,5 +1,6 @@
 import { setConfig as setNxConfig } from 'https://da.live/nx2/scripts/nx.js';
 import { loadArea, loadBlock, setConfig, loadStyle } from './nx.js';
+import { initLabCredentials } from './lab-credentials.js';
 
 import('https://da.live/nx2/blocks/profile/profile.js');
 await loadStyle('https://da.live/nx2/styles/styles.css');
@@ -84,7 +85,7 @@ async function initNx() {
   await setNxConfig(conf);
   const { loadIms } = await import('https://da.live/nx2/utils/ims.js');
   const details = await loadIms();
-  console.log(details.email);
+  initLabCredentials(details.email);
 }
 
 (async function loadPage() {

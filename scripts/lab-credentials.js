@@ -21,7 +21,7 @@ function replaceAll(text, map) {
   );
 }
 
-export function replacePlaceholdersInElement(creds, root = null) {
+function replacePlaceholdersInElement(creds, root = null) {
   const el = root ?? document.querySelector('main') ?? document.body;
   if (!el) return;
 
