@@ -3,11 +3,8 @@ const PLACEHOLDER_ATTRS = ['href', 'placeholder', 'title', 'aria-label'];
 
 function parseCredentials(email) {
   const match = email.match(/^(L\d+)-(\d+)@/);
-  return {
-    email,
-    labId: match?.[1] ?? '',
-    seat: match?.[2] ?? '',
-  };
+  if (!match) return null;
+  return { email, labId: match[1], seat: match[2] };
 }
 
 function buildPlaceholderMap({ email, labId, seat }) {
@@ -49,6 +46,7 @@ function replacePlaceholdersInElement(creds, root = null) {
 
 export function initLabCredentials(email) {
   const creds = parseCredentials(email);
+  if (!creds) return null;
   replacePlaceholdersInElement(creds);
   return creds;
 }
