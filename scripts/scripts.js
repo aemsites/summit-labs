@@ -1,10 +1,18 @@
-import { loadArea, loadBlock, setConfig } from './nx.js';
+import { setConfig as setNxConfig } from 'https://da.live/nx2/scripts/nx.js';
+import { loadArea, loadBlock, setConfig, loadStyle } from './nx.js';
+
+import('https://da.live/nx2/blocks/profile/profile.js');
+await loadStyle('https://da.live/nx2/styles/styles.css');
+
+const hostnames = ['adobelabs.dev'];
 
 // Supported locales
-const locales = {
-  '': { ietf: 'en', tk: 'etj3wuq.css' },
-  '/de': { ietf: 'de', tk: 'etj3wuq.css' },
-};
+const locales = { '': { ietf: 'en', title: 'English', lang: 'en', tk: 'etj3wuq.css' } };
+
+const linkBlocks = [];
+
+const imsClientId = 'adobelabs';
+const imsScope = 'ab.manage,AdobeID,gnav,openid,org.read,read_organizations,session,additional_info.ownerOrg,additional_info.projectedProductContext,account_cluster.read';
 
 // Widget patterns to look for
 const widgets = [
@@ -64,20 +72,23 @@ function setColorScheme() {
   classList.add(scheme);
 }
 
-function setLabPlaceholders() {
-  const org = localStorage.getItem('lab-org');
-  const site = localStorage.getItem('lab-site');
-  if (!(site || org)) return;
-  document.body.outerHTML = document.body.outerHTML
-    .replaceAll('{ORG}', org)
-    .replaceAll('{SITE}', site)
-    .replaceAll('%7BORG%7D', org)
-    .replaceAll('%7BSITE%7D', site);
+const conf = {
+  hostnames,
+  locales,
+  imsClientId,
+  imsScope,
+  linkBlocks,
+};
+
+async function initNx() {
+  await setNxConfig(conf);
+  const { loadIms } = await import('https://da.live/nx2/utils/ims.js');
+  const details = await loadIms();
+  console.log(details.email);
 }
 
 (async function loadPage() {
-  // Project functions
-  setLabPlaceholders();
+  initNx();
   setColorScheme();
   detectTutorial();
 

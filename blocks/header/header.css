@@ -27,9 +27,14 @@ header {
   }
 }
 
-header .actions-section {
+header div.section.actions-section {
   justify-self: end;
   gap: var(--spacing-m);
+  display: none;
+
+  &:has(.is-loaded) {
+    display: flex;
+  }
 
   .default-content {
     display: flex;
