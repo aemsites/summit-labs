@@ -1,6 +1,6 @@
 import { setConfig as setNxConfig } from 'https://da.live/nx2/scripts/nx.js';
 import { loadArea, loadBlock, setConfig, loadStyle } from './nx.js';
-import { setPlaceholders } from './lab-credentials.js';
+import { setPlaceholders } from './lab-placeholders.js';
 
 import('https://da.live/nx2/blocks/profile/profile.js');
 await loadStyle('https://da.live/nx2/styles/styles.css');

@@ -9,7 +9,14 @@ function parseCredentials(email) {
 }
 
 function buildPlaceholderMap({ email, labId, seat }) {
-  return { '{adobeid}': email, '{lab}': labId, '{seat}': seat };
+  return {
+    '{adobeid}': email,
+    '%7Badobeid%7D': email,
+    '{lab}': labId,
+    '%7Blab%7D': labId,
+    '{seat}': seat,
+    '%7Bseat%7D': seat,
+  };
 }
 
 function replaceAll(text, map) {
