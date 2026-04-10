@@ -35,7 +35,8 @@ const initIms = (() => {
     details ??= (async () => {
       try {
         const module = await import('https://da.live/nx2/utils/ims.js');
-        return module.loadIms();
+        const loaded = await module.loadIms();
+        return loaded;
       } catch {
         console.log('no ims');
         return null;
