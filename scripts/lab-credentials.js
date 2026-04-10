@@ -19,9 +19,8 @@ function replaceAll(text, map) {
   );
 }
 
-function replacePlaceholdersInElement(creds, root = null) {
-  const el = root ?? document.querySelector('main') ?? document.body;
-  if (!el) return;
+function replaceInElement(area, creds) {
+  if (!area) return;
 
   const map = buildPlaceholderMap(creds);
 
@@ -42,12 +41,12 @@ function replacePlaceholdersInElement(creds, root = null) {
       }
     }
     node.childNodes.forEach(walk);
-  }(el));
+  }(area));
 }
 
-export function initLabCredentials(email) {
+export function setPlaceholders(area, email) {
   const creds = parseCredentials(email);
   if (!creds) return null;
-  replacePlaceholdersInElement(creds);
+  replaceInElement(area, creds);
   return creds;
 }

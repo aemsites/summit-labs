@@ -1,6 +1,6 @@
 import { setConfig as setNxConfig } from 'https://da.live/nx2/scripts/nx.js';
 import { loadArea, loadBlock, setConfig, loadStyle } from './nx.js';
-import { initLabCredentials } from './lab-credentials.js';
+import { setPlaceholders } from './lab-credentials.js';
 
 import('https://da.live/nx2/blocks/profile/profile.js');
 await loadStyle('https://da.live/nx2/styles/styles.css');
@@ -21,6 +21,25 @@ const widgets = [
   { youtube: 'https://www.youtube' },
 ];
 
+const conf = {
+  hostnames,
+  locales,
+  imsClientId,
+  imsScope,
+  linkBlocks,
+};
+
+const initIms = (() => {
+  let details;
+  return () => {
+    details ??= (async () => {
+      const module = await import('https://da.live/nx2/utils/ims.js');
+      return module.loadIms();
+    })();
+    return details;
+  };
+})();
+
 function decorateLinks(area) {
   const anchors = area.querySelectorAll('a');
   for (const a of anchors) {
@@ -37,7 +56,7 @@ function decorateLinks(area) {
 }
 
 // How to decorate an area before loading it
-const decorateArea = ({ area = document }) => {
+const decorateArea = async ({ area = document }) => {
   const eagerLoad = (parent, selector) => {
     const img = parent.querySelector(selector);
     img?.removeAttribute('loading');
@@ -45,6 +64,10 @@ const decorateArea = ({ area = document }) => {
 
   decorateLinks(area);
   eagerLoad(area, 'img');
+
+  // Set IMS-based placeholders
+  const details = await initIms();
+  setPlaceholders(area, details.email);
 };
 
 function detectTutorial() {
@@ -77,23 +100,8 @@ function setColorScheme() {
   classList.add(scheme);
 }
 
-const conf = {
-  hostnames,
-  locales,
-  imsClientId,
-  imsScope,
-  linkBlocks,
-};
-
-async function initNx() {
-  await setNxConfig(conf);
-  const { loadIms } = await import('https://da.live/nx2/utils/ims.js');
-  const details = await loadIms();
-  initLabCredentials(details.email);
-}
-
 (async function loadPage() {
-  initNx();
+  await setNxConfig(conf);
   setColorScheme();
   detectTutorial();
 

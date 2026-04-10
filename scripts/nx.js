@@ -189,7 +189,7 @@ function decorateHeader() {
 
 export async function loadArea({ area } = { area: document }) {
   const { decorateArea } = getConfig();
-  if (decorateArea) decorateArea({ area });
+  if (decorateArea) await decorateArea({ area });
   const isDoc = area === document;
   if (isDoc) decorateHeader();
   const sections = decorateSections(area, isDoc);
