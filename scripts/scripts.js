@@ -38,7 +38,6 @@ const initIms = (() => {
         const loaded = await module.loadIms();
         return loaded;
       } catch {
-        console.log('no ims');
         return null;
       }
     })();
@@ -73,7 +72,7 @@ const decorateArea = async ({ area = document }) => {
 
   // Set IMS-based placeholders
   const details = await initIms();
-  setPlaceholders(area, details.email);
+  if (details) setPlaceholders(area, details.email);
 };
 
 function detectTutorial() {
