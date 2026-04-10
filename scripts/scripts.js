@@ -25,8 +25,12 @@ function decorateLinks(area) {
   const anchors = area.querySelectorAll('a');
   for (const a of anchors) {
     const { href } = a;
-    const { origin } = new URL(href);
-    if (origin !== window.location.origin) {
+    const url = new URL(href);
+    if (url.origin.includes('.da.') && url.hostname.includes('--')) {
+      url.hostname = url.hostname.replace('.da.', '.aem.');
+      a.href = url.toString();
+    }
+    if (url.origin !== window.location.origin) {
       a.setAttribute('target', '_blank');
     }
   }
