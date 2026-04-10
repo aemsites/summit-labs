@@ -33,8 +33,12 @@ const initIms = (() => {
   let details;
   return () => {
     details ??= (async () => {
-      const module = await import('https://da.live/nx2/utils/ims.js');
-      return module.loadIms();
+      try {
+        const module = await import('https://da.live/nx2/utils/ims.js');
+        return module.loadIms();
+      } catch {
+        return null;
+      }
     })();
     return details;
   };
