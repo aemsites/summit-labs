@@ -16,8 +16,6 @@ function replaceDotMedia(path, doc) {
  * @returns {HTMLElement} The root element of the fragment
  */
 export async function loadFragment(path) {
-  const { decorateArea } = getConfig();
-
   const resp = await fetch(`${path}.plain.html`);
   if (!resp.ok) throw Error(`Couldn't fetch ${path}.plain.html`);
 
@@ -33,8 +31,7 @@ export async function loadFragment(path) {
   fragment.append(...sections);
 
   // Hydrate like a normal page
-  if (decorateArea) decorateArea({ area: fragment });
-  loadArea({ area: fragment });
+  await loadArea({ area: fragment });
 
   return fragment;
 }
