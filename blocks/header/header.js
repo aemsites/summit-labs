@@ -2,6 +2,8 @@ import { getConfig, getMetadata } from '../../scripts/nx.js';
 import getSvg from '../../scripts/utils/svg.js';
 import { loadFragment } from '../fragment/fragment.js';
 
+import('https://da.live/nx2/blocks/profile/profile.js');
+
 const { locale, codeBase } = getConfig();
 
 const HEADER_PATH = '/fragments/nav/header';
@@ -53,7 +55,7 @@ async function decorateActions(section) {
   const discord = decorateLink(section, 'discord.com', 'discord');
   const github = decorateLink(section, 'github.com', 'github');
   await Promise.all([color, discord, github]);
-  const nxProfile = await (await import('../profile/profile.js')).default();
+  const nxProfile = document.createElement('nx-profile');
   section.append(nxProfile);
 }
 

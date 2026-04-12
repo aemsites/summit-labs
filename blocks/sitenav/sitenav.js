@@ -20,6 +20,16 @@ function generateSiteList(siteData, pathname, level = 1) {
     const labNum = (key) => parseInt(siteData[key].labNumber?.slice(1), 10) || Infinity;
     keys.sort((a, b) => labNum(a) - labNum(b));
   }
+  if (level === 3) {
+    keys.sort((a, b) => {
+      const numA = parseInt(a, 10) || 0;
+      const numB = parseInt(b, 10) || 0;
+      if (numA !== numB) return numA - numB;
+      const suffA = a.includes('-') ? a.slice(a.indexOf('-')) : '';
+      const suffB = b.includes('-') ? b.slice(b.indexOf('-')) : '';
+      return suffA.localeCompare(suffB);
+    });
+  }
 
   const ul = document.createElement('ul');
   ul.classList.add(`level-${level}`);

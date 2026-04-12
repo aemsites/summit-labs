@@ -1,4 +1,4 @@
-import { getConfig } from '../../scripts/nx.js';
+import { getConfig, getMetadata } from '../../scripts/nx.js';
 
 const { codeBase } = getConfig();
 
@@ -54,7 +54,6 @@ function getNumNextPrev(pageList, pathSplit, pagenum) {
   const basePath = `/${pathSplit.join('/')}`;
 
   const prevPath = pagenum === 1 ? basePath : `${basePath}/${pagenum - 1}`;
-  console.log(prevPath);
 
   const prevEntry = pageList.find((page) => page.path === prevPath || page.path === `${prevPath}/`);
   if (prevEntry) cards.push(buildCard('Previous', prevEntry));
@@ -73,6 +72,12 @@ function getNumNextPrev(pageList, pathSplit, pagenum) {
 }
 
 export default async function init(el) {
+  const tutorialNav = getMetadata('tutorial-nav');
+  if (tutorialNav === 'off') {
+    el.remove();
+    return;
+  }
+
   const pageList = await fetchSiteData();
 
   const { pathname } = window.location;
@@ -82,7 +87,7 @@ export default async function init(el) {
   const pathSplit = toSplit.split('/');
 
   const pagename = pathSplit.pop();
-  
+
   const pagenum = getNumber(pagename);
   const nav = pagenum
     ? getNumNextPrev(pageList, pathSplit, pagenum)
