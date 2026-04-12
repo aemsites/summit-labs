@@ -16,15 +16,20 @@ function getTitle(page) {
 function generateSiteList(siteData, pathname, level = 1) {
   const keys = Object.keys(siteData);
   if (level === 1) keys.sort((a, b) => a.localeCompare(b));
+  if (level === 2) {
+    const labNum = (key) => parseInt(siteData[key].labNumber?.slice(1), 10) || Infinity;
+    keys.sort((a, b) => labNum(a) - labNum(b));
+  }
 
-  return keys.map((key) => {
-    const ul = document.createElement('ul');
-    ul.classList.add(`level-${level}`);
+  const ul = document.createElement('ul');
+  ul.classList.add(`level-${level}`);
 
+  keys.forEach((key) => {
     const inPath = pathname.startsWith(siteData[key].path);
-    if (inPath) ul.classList.add('is-open');
 
     const li = document.createElement('li');
+    if (inPath) li.classList.add('is-open');
+
     const a = document.createElement('a');
     a.href = siteData[key].path;
     a.textContent = getTitle(siteData[key]);
@@ -36,14 +41,15 @@ function generateSiteList(siteData, pathname, level = 1) {
       btn.setAttribute('aria-label', 'Expand');
       btn.innerHTML = EXP_ICON;
       btn.addEventListener('click', () => {
-        btn.closest('ul').classList.toggle('is-open');
+        btn.closest('li').classList.toggle('is-open');
       });
       const children = generateSiteList(siteData[key].children, pathname, level + 1);
-      li.append(btn, ...children);
+      li.append(btn, children);
     }
     ul.append(li);
-    return ul;
   });
+
+  return ul;
 }
 
 function formatSiteData(pageData) {
@@ -116,7 +122,7 @@ export default async function init(el) {
     const siteData = await fetchSiteData();
     const formatted = formatSiteData(siteData);
     const siteList = generateSiteList(formatted, pathname);
-    el.append(...siteList);
+    el.append(siteList);
   } catch (e) {
     throw Error(e);
   }

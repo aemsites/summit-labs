@@ -13,43 +13,16 @@
     height: 28px;
   }
 
+  /* First Level */
+  > ul {
+    padding: 0;
+  }
+
   ul {
     margin: 0;
     padding: 0 0 0 12px;
     box-sizing: border-box;
     list-style: none;
-
-    > li > ul {
-      margin-right: 16px;
-      display: none;
-    }
-
-    &.is-open {
-      > li > .expand-tree {
-        transform: rotate(90deg);
-      }
-
-      > li > ul {
-        display: block;
-      }
-    }
-  }
-
-  li {
-    margin-block: 1rem 0;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-
-    ul {
-      flex: 1 0 100%;
-    }
-  }
-
-  /* First Level */
-  > ul {
-    padding: 0;
   }
 
   .expand-tree {
@@ -64,6 +37,30 @@
     svg {
       width: 16px;
       height: 16px;
+    }
+  }
+
+  li {
+    margin-block: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+
+    > ul {
+      flex: 1 0 100%;
+      margin-right: 16px;
+      display: none;
+    }
+
+    &.is-open {
+      > .expand-tree {
+        transform: rotate(90deg);
+      }
+
+      > ul {
+        display: block;
+      }
     }
   }
 
