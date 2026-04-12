@@ -58,7 +58,6 @@ async function decorateActions(section) {
 }
 
 async function decorateHeader(fragment) {
-  console.log(fragment.outerHTML);
   const img = fragment.querySelector('.section:first-child img');
   if (img) {
     const brand = img.closest('.section');

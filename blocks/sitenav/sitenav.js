@@ -14,7 +14,10 @@ function getTitle(page) {
 }
 
 function generateSiteList(siteData, pathname, level = 1) {
-  return Object.keys(siteData).map((key) => {
+  const keys = Object.keys(siteData);
+  if (level === 1) keys.sort((a, b) => a.localeCompare(b));
+
+  return keys.map((key) => {
     const ul = document.createElement('ul');
     ul.classList.add(`level-${level}`);
 
