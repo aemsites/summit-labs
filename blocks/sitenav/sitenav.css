@@ -13,16 +13,15 @@
     height: 28px;
   }
 
-  /* First Level */
-  > ul {
-    padding: 0;
-  }
-
   ul {
     margin: 0;
     padding: 0 0 0 12px;
     box-sizing: border-box;
     list-style: none;
+
+    &.level-1 {
+      padding: 0;
+    }
   }
 
   .expand-tree {
