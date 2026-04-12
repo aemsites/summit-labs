@@ -13,8 +13,44 @@ function getTitle(page) {
   return page.title;
 }
 
+/** Numeric L### / L## compare; fallback to locale numeric string compare */
+function compareLabIds(a, b) {
+  const sa = String(a);
+  const sb = String(b);
+  const ma = sa.match(/^L(\d+)$/i);
+  const mb = sb.match(/^L(\d+)$/i);
+  if (ma && mb) return Number(ma[1]) - Number(mb[1]);
+  return sa.localeCompare(sb, 'en', { numeric: true, sensitivity: 'base' });
+}
+
+/**
+ * Level 1: tracks by title (case-insensitive).
+ * Deeper levels: by labNumber when both present, else by display title (numeric-aware), then path.
+ */
+function compareNavNodes(nodeA, nodeB, level) {
+  let cmp = 0;
+  if (level === 1) {
+    cmp = (nodeA.title || '').localeCompare(nodeB.title || '', 'en', { sensitivity: 'base' });
+  } else if (nodeA.labNumber && nodeB.labNumber) {
+    cmp = compareLabIds(nodeA.labNumber, nodeB.labNumber);
+  }
+  if (cmp === 0) {
+    cmp = getTitle(nodeA).localeCompare(getTitle(nodeB), 'en', { numeric: true, sensitivity: 'base' });
+  }
+  if (cmp === 0) {
+    cmp = nodeA.path.localeCompare(nodeB.path);
+  }
+  return cmp;
+}
+
+function getSortedChildKeys(children, level) {
+  return Object.keys(children).sort(
+    (ka, kb) => compareNavNodes(children[ka], children[kb], level),
+  );
+}
+
 function generateSiteList(siteData, pathname, level = 1) {
-  return Object.keys(siteData).map((key) => {
+  return getSortedChildKeys(siteData, level).map((key) => {
     const ul = document.createElement('ul');
     ul.classList.add(`level-${level}`);
 
