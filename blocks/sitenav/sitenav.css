@@ -84,7 +84,6 @@
 @media (width >= 900px) {
   .sitenav {
     display: block;
-
     width: 300px;
     position: fixed;
     top: 0;
@@ -92,5 +91,7 @@
     bottom: 0;
     box-sizing: border-box;
     overflow-y: auto;
+    scrollbar-color: light-dark(#fff, #000) transparent;
+    scrollbar-width: thin;
   }
 }
