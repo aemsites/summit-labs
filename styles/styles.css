@@ -293,7 +293,7 @@ img {
 
       /* Default main content image decoration */
       img {
-        box-shadow: 0 4px 16px 4px rgb(0 0 0 / 20%);
+        text-shadow: 0 4px 16px 4px rgb(0 0 0 / 20%);
       }
     }
 
