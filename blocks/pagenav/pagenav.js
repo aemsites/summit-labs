@@ -7,7 +7,7 @@ export default function init(el) {
   if (!mainElement) return;
 
   const headings = Array.from(mainElement.querySelectorAll('h1, h2, h3, h4, h5, h6'));
-  if (headings.length === 0) return;
+  if (headings.length <= 1) return;
 
   const headingData = headings.map((heading) => {
     const a = document.createElement('a');

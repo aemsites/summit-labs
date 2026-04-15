@@ -105,6 +105,9 @@ function setColorScheme() {
 }
 
 (async function loadPage() {
+  if (localStorage.getItem('sitenav-collapsed') === 'true') {
+    document.body.classList.add('sitenav-collapsed');
+  }
   await setNxConfig(conf);
   setColorScheme();
   detectTutorial();

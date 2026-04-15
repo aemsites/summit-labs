@@ -25,7 +25,8 @@ async function decorateMainNav(el) {
   button.setAttribute('aria-label', 'Collapse navigation');
   button.prepend(collapseSvg);
   button.addEventListener('click', () => {
-    document.body.classList.toggle('sitenav-collapsed');
+    const collapsed = document.body.classList.toggle('sitenav-collapsed');
+    localStorage.setItem('sitenav-collapsed', collapsed);
   });
   el.prepend(button, logo);
   el.classList.add('main-nav-section');
