@@ -16,7 +16,7 @@ nav.tutorial-nav {
 
     &:hover {
       text-decoration: none;
-      background-color: light-dark(var(--s2-gray-100), var(--s2-gray-800));
+      background-color: var(--s2-gray-100);
     }
 
     p {

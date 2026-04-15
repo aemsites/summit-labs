@@ -16,6 +16,10 @@
     margin: 0;
   }
 
+  code {
+    background-color: #efefef;
+  }
+
   &.warning {
     background-color: #fdf1f2;
     border-left: 4px solid #e14f62;
