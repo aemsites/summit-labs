@@ -13,6 +13,31 @@ function getTitle(page) {
   return page.title;
 }
 
+function collectLevel2(siteData) {
+  const results = [];
+  Object.values(siteData).forEach((cat) => {
+    Object.values(cat.children).forEach((item) => {
+      const labNum = parseInt(item.labNumber?.slice(1), 10) || Infinity;
+      results.push({ title: getTitle(item), path: item.path, labNum });
+    });
+  });
+  return results;
+}
+
+function generateFilteredList(items) {
+  const ul = document.createElement('ul');
+  ul.classList.add('level-1', 'filtered-results');
+  items.forEach(({ title, path }) => {
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = path;
+    a.textContent = title;
+    li.append(a);
+    ul.append(li);
+  });
+  return ul;
+}
+
 function generateSiteList(siteData, pathname, level = 1) {
   const keys = Object.keys(siteData);
   if (level === 1) keys.sort((a, b) => a.localeCompare(b));
@@ -131,8 +156,33 @@ export default async function init(el) {
     const { pathname } = window.location;
     const siteData = await fetchSiteData();
     const formatted = formatSiteData(siteData);
+    const allLevel2 = collectLevel2(formatted);
     const siteList = generateSiteList(formatted, pathname);
-    el.append(siteList);
+
+    const search = document.createElement('input');
+    search.type = 'text';
+    search.className = 'sitenav-search';
+    search.placeholder = 'Search for lab...';
+
+    let filteredList = null;
+
+    search.addEventListener('input', () => {
+      const query = search.value.trim().toLowerCase();
+      if (filteredList) { filteredList.remove(); filteredList = null; }
+
+      if (!query) {
+        siteList.style.display = '';
+        return;
+      }
+
+      const matches = allLevel2.filter((item) => item.title.toLowerCase().includes(query))
+        .sort((a, b) => a.labNum - b.labNum);
+      filteredList = generateFilteredList(matches);
+      siteList.style.display = 'none';
+      siteList.after(filteredList);
+    });
+
+    el.append(search, siteList);
   } catch (e) {
     throw Error(e);
   }

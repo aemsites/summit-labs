@@ -5,12 +5,25 @@
 
   a.docket-brand-logo {
     display: block;
-    margin-bottom: calc(36px + 12px);
+    margin-bottom: 32px;
   }
 
   svg {
     display: block;
     height: 28px;
+  }
+
+  .sitenav-search {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px 12px;
+    margin-bottom: 32px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    background: light-dark(var(--s2-gray-200), var(--s2-gray-75));
+    color: inherit;
   }
 
   ul {

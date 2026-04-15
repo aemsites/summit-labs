@@ -304,6 +304,17 @@ img {
     footer {
       grid-area: footer;
     }
+
+    &.sitenav-collapsed {
+      grid-template:
+        "header header" auto
+        "main pagenav" 1fr
+        "footer footer" auto / minmax(0, 1fr) 300px;
+
+      .sitenav {
+        display: none;
+      }
+    }
   }
 }
 

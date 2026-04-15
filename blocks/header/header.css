@@ -60,11 +60,36 @@ header div.section.actions-section {
     padding: 0 32px 0 72px;
   }
 
-  header .main-nav-section ul {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    gap: var(--spacing-xl);
+  header .main-nav-section {
+    position: relative;
+
+    button {
+      position: absolute;
+      left: -48px;
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .docket-brand-logo {
+      display: none;
+
+      svg {
+        height: 28px;
+      }
+    }
+
+    ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      gap: var(--spacing-xl);
+    }
+  }
+
+  .sitenav-collapsed header .main-nav-section .docket-brand-logo {
+    display: block;
+    margin-right: 24px;
   }
 }

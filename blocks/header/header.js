@@ -12,7 +12,22 @@ function decorateBrand(el) {
   el.classList.add('brand-section');
 }
 
-function decorateMainNav(el) {
+async function decorateMainNav(el) {
+  const [collapseSvg, logoSvg] = await getSvg({ paths: ['/blocks/header/img/collapse.svg', `${codeBase}/img/logos/site.svg`] });
+
+  const logo = document.createElement('a');
+  logo.href = '/';
+  logo.className = 'docket-brand-logo';
+  logo.setAttribute('aria-label', 'Home');
+  logo.append(logoSvg);
+
+  const button = document.createElement('button');
+  button.setAttribute('aria-label', 'Collapse navigation');
+  button.prepend(collapseSvg);
+  button.addEventListener('click', () => {
+    document.body.classList.toggle('sitenav-collapsed');
+  });
+  el.prepend(button, logo);
   el.classList.add('main-nav-section');
 }
 
@@ -68,7 +83,7 @@ async function decorateHeader(fragment) {
 
   const ul = fragment.querySelector('ul');
   const mainNav = ul.closest('.section');
-  if (mainNav) decorateMainNav(mainNav);
+  if (mainNav) await decorateMainNav(mainNav);
 
   const actions = fragment.querySelector('.section:last-child');
 
