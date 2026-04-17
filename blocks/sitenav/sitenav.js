@@ -147,10 +147,21 @@ export default async function init(el) {
   link.className = 'docket-brand-logo';
   link.setAttribute('aria-label', 'Home');
 
-  const svg = await getSvg({ paths: [`${codeBase}/img/logos/site.svg`] });
-  link.append(svg[0]);
+  const [logoSvg, closeSvg] = await getSvg({ paths: [`${codeBase}/img/logos/site.svg`, '/blocks/header/img/collapse.svg'] });
+  link.append(logoSvg);
 
-  el.append(link);
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'sitenav-close';
+  closeBtn.setAttribute('aria-label', 'Close navigation');
+  closeBtn.append(closeSvg);
+  closeBtn.addEventListener('click', () => {
+    document.body.classList.remove('sitenav-open');
+  });
+
+  const brand = document.createElement('div');
+  brand.className = 'sitenav-brand';
+  brand.append(link, closeBtn);
+  el.append(brand);
 
   try {
     const { pathname } = window.location;
@@ -162,7 +173,7 @@ export default async function init(el) {
     const search = document.createElement('input');
     search.type = 'text';
     search.className = 'sitenav-search';
-    search.placeholder = 'Search for lab...';
+    search.placeholder = 'Search for a lab...';
 
     let filteredList = null;
 

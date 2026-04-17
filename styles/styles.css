@@ -257,13 +257,8 @@ img {
   }
 }
 
-.sitenav,
 .pagenav {
   display: none;
-}
-
-@media (width >= 600px) {
-
 }
 
 @media (width >= 900px) {
@@ -289,11 +284,6 @@ img {
     main {
       grid-area: main;
       margin: 0 72px;
-
-      /* Default main content image decoration */
-      img {
-        text-shadow: 0 4px 16px 4px rgb(0 0 0 / 20%);
-      }
     }
 
     .pagenav {
@@ -325,6 +315,7 @@ img {
 }
 
 main > div,
-div[data-status] {
+div[data-status],
+nav[data-status] {
   display: none;
 }

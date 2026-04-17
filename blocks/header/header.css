@@ -7,8 +7,7 @@ header {
     flex: 0 0 100%;
     display: grid;
     align-items: center;
-    gap: var(--spacing-xl);
-    grid-template-columns: 1fr auto;
+    grid-template-columns: auto 1fr auto;
     justify-items: start;
     line-height: 1;
 
@@ -19,6 +18,23 @@ header {
 
     p {
       margin: 0;
+    }
+  }
+
+  .brand-section {
+    position: relative;
+    gap: var(--spacing-m);
+
+    .sitenav-toggle {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 1px 12px 0 0;
+    }
+
+    .docket-brand-logo svg {
+      display: block;
+      height: 28px;
     }
   }
 
@@ -57,39 +73,30 @@ header div.section.actions-section {
 
 @media (width >= 900px) {
   .header {
-    padding: 0 32px 0 72px;
+    padding: 0 72px;
   }
 
-  header .main-nav-section {
-    position: relative;
-
-    button {
+  header .brand-section {
+    .sitenav-toggle {
       position: absolute;
-      left: -48px;
-      background: transparent;
-      border: none;
-      padding: 0;
+      left: -45px;
     }
 
     .docket-brand-logo {
       display: none;
-
-      svg {
-        height: 28px;
-      }
-    }
-
-    ul {
-      display: flex;
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      gap: var(--spacing-xl);
+      margin-right: 32px;
     }
   }
 
-  .sitenav-collapsed header .main-nav-section .docket-brand-logo {
+  .sitenav-collapsed header .brand-section .docket-brand-logo {
     display: block;
-    margin-right: 24px;
+  }
+
+  header .main-nav-section ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--spacing-xl);
   }
 }

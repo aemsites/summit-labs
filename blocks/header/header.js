@@ -8,12 +8,26 @@ const { locale, codeBase } = getConfig();
 
 const HEADER_PATH = '/fragments/nav/header';
 
-function decorateBrand(el) {
+async function decorateBrand(el) {
   el.classList.add('brand-section');
-}
+  el.innerHTML = '';
 
-async function decorateMainNav(el) {
   const [collapseSvg, logoSvg] = await getSvg({ paths: ['/blocks/header/img/collapse.svg', `${codeBase}/img/logos/site.svg`] });
+
+  const button = document.createElement('button');
+  button.className = 'sitenav-toggle';
+  button.setAttribute('aria-label', 'Toggle navigation');
+  button.append(collapseSvg);
+  button.addEventListener('click', () => {
+    const isMobile = !window.matchMedia('(min-width: 900px)').matches;
+    if (isMobile) {
+      document.body.classList.toggle('sitenav-open');
+      localStorage.removeItem('sitenav-collapsed');
+    } else {
+      const collapsed = document.body.classList.toggle('sitenav-collapsed');
+      localStorage.setItem('sitenav-collapsed', collapsed);
+    }
+  });
 
   const logo = document.createElement('a');
   logo.href = '/';
@@ -21,14 +35,10 @@ async function decorateMainNav(el) {
   logo.setAttribute('aria-label', 'Home');
   logo.append(logoSvg);
 
-  const button = document.createElement('button');
-  button.setAttribute('aria-label', 'Collapse navigation');
-  button.prepend(collapseSvg);
-  button.addEventListener('click', () => {
-    const collapsed = document.body.classList.toggle('sitenav-collapsed');
-    localStorage.setItem('sitenav-collapsed', collapsed);
-  });
-  el.prepend(button, logo);
+  el.append(button, logo);
+}
+
+function decorateMainNav(el) {
   el.classList.add('main-nav-section');
 }
 
@@ -79,12 +89,12 @@ async function decorateHeader(fragment) {
   const img = fragment.querySelector('.section:first-child img');
   if (img) {
     const brand = img.closest('.section');
-    decorateBrand(brand);
+    await decorateBrand(brand);
   }
 
   const ul = fragment.querySelector('ul');
   const mainNav = ul.closest('.section');
-  if (mainNav) await decorateMainNav(mainNav);
+  if (mainNav) decorateMainNav(mainNav);
 
   const actions = fragment.querySelector('.section:last-child');
 

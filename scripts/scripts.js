@@ -92,6 +92,7 @@ const loadNav = async (name) => {
   nav.className = name;
   main.insertAdjacentElement(position, nav);
   await loadBlock(nav);
+  delete nav.dataset.status;
 };
 
 function setColorScheme() {

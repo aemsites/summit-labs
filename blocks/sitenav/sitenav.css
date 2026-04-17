@@ -2,15 +2,45 @@
   grid-area: sitenav;
   padding: 32px 36px 36px;
   font-size: 14px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  background-color: light-dark(var(--light-color), var(--dark-color));
+  transform: translateX(-100%);
+  transition: transform 0.2s ease;
+  z-index: 10;
+  scrollbar-color: light-dark(#fff, #000) transparent;
+  scrollbar-width: thin;
+
+  .sitenav-brand {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
 
   a.docket-brand-logo {
     display: block;
-    margin-bottom: 32px;
   }
 
   svg {
     display: block;
     height: 28px;
+  }
+
+  .sitenav-close {
+    background: transparent;
+    border: none;
+    padding: 0;
+    transform: scaleX(-1);
+
+    svg {
+      height: 24px;
+    }
   }
 
   .sitenav-search {
@@ -44,7 +74,7 @@
     background-color: transparent;
     width: 16px;
     height: 16px;
-    color: var(--s2-gray-500);
+    color: var(--s2-gray-400);
 
     svg {
       width: 16px;
@@ -94,17 +124,19 @@
   }
 }
 
+body.sitenav-open .sitenav {
+  transform: translateX(0);
+}
+
 @media (width >= 900px) {
-  .sitenav {
-    display: block;
-    width: 300px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    box-sizing: border-box;
-    overflow-y: auto;
-    scrollbar-color: light-dark(#fff, #000) transparent;
-    scrollbar-width: thin;
+  .sitenav,
+  body.sitenav-open .sitenav {
+    transform: none;
+    transition: none;
+    background-color: light-dark(rgb(0 0 0 / 5%), rgb(255 255 255 / 5%));
+  }
+
+  .sitenav .sitenav-close {
+    display: none;
   }
 }
