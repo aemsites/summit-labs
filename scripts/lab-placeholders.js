@@ -1,3 +1,5 @@
+import { readAllSettings } from './workbook-settings.js';
+
 const SKIP_TAGS = new Set(['SCRIPT', 'STYLE']);
 const PLACEHOLDER_ATTRS = ['href', 'placeholder', 'title', 'aria-label'];
 
@@ -8,15 +10,18 @@ function parseCredentials(email) {
   return { email, labId: match[1], seat: match[2] };
 }
 
-function buildPlaceholderMap({ email, labId, seat }) {
-  return {
-    '{adobeid}': email,
-    '%7Badobeid%7D': email,
-    '{lab}': labId,
-    '%7Blab%7D': labId,
-    '{seat}': seat,
-    '%7Bseat%7D': seat,
-  };
+// IMS credential keys use different placeholder names than their object keys.
+const CRED_KEY_MAP = { email: 'adobeid', labId: 'lab' };
+
+function buildPlaceholderMap(values = {}) {
+  const map = {};
+  for (const [key, value] of Object.entries(values)) {
+    if (!value) continue;
+    const token = CRED_KEY_MAP[key] ?? key;
+    map[`{${token}}`] = value;
+    map[`%7B${token}%7D`] = value;
+  }
+  return map;
 }
 
 function replaceAll(text, map) {
@@ -51,9 +56,23 @@ function replaceInElement(area, creds) {
   }(area));
 }
 
+function needsSettings(area) {
+  if (!area) return false;
+  const html = area.innerHTML || area.documentElement?.innerHTML || '';
+  // Any {token} or URL-encoded %7Btoken%7D pattern that isn't an IMS credential
+  return /\{[a-zA-Z][a-zA-Z0-9]*\}|%7B[a-zA-Z][a-zA-Z0-9]*%7D/.test(html);
+}
+
 export function setPlaceholders(area, email) {
   const creds = parseCredentials(email);
-  if (!creds) return null;
-  replaceInElement(area, creds);
-  return creds;
+  const workbookSettings = readAllSettings();
+
+  if (!creds && !workbookSettings) return null;
+
+  // Build extended creds object: IMS creds + any stored workbook settings
+  const values = { ...creds };
+  if (workbookSettings) Object.assign(values, workbookSettings);
+
+  replaceInElement(area, values);
+  return values;
 }
