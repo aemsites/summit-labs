@@ -10,9 +10,7 @@ import { setPlaceholders } from '../../scripts/lab-placeholders.js';
 /**
  * Parse block rows into field definitions.
  *
- * Supported formats:
- * - New format: label | key | content | type?
- * - Legacy format: key | content | type?
+ * Row format: label | key | content | type?
  *
  * Special keys in first column:
  * - title: renders heading text from second column
@@ -59,24 +57,12 @@ function parseBlock(el) {
 
     firstDataRowSeen = true;
 
-    let label;
-    let key;
-    let content;
-    let type;
+    if (cells.length < 3) continue;
 
-    if (cells.length >= 3) {
-      // New format: label | key | content | type?
-      label = col1;
-      key = col2;
-      content = cells[2].textContent.trim();
-      type = cells[3]?.textContent.trim() || 'text';
-    } else {
-      // Legacy format: key | content | type?
-      label = col1;
-      key = col1;
-      content = col2;
-      type = cells[2]?.textContent.trim() || 'text';
-    }
+    const label = col1;
+    const key = col2;
+    const content = cells[2].textContent.trim();
+    const type = cells[3]?.textContent.trim() || 'text';
 
     if (!key) continue;
 

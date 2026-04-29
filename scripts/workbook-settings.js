@@ -221,17 +221,3 @@ export function evaluateComputedFields(computedFields = [], context = {}) {
   }
   return result;
 }
-
-// ---- legacy convenience wrappers (kept for backwards-compat) ---------------
-
-export function readWorkbookSettings(storage) {
-  return readSetting('contentRoot', 'text', storage);
-}
-
-export function saveContentRoot(value, storage) {
-  return saveSetting('contentRoot', value, 'text', storage);
-}
-
-export function clearContentRoot(storage) {
-  clearSetting('contentRoot', storage);
-}
