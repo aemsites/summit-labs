@@ -71,7 +71,7 @@ const decorateArea = async ({ area = document }) => {
 
   // Set IMS-based placeholders
   const details = await initIms();
-  if (details) setPlaceholders(area, details.email);
+  setPlaceholders(area, details?.email);
 };
 
 function detectTutorial() {
