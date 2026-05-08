@@ -98,8 +98,8 @@
 }
 
 .workbook-settings-save {
-  background: light-dark(var(--s2-gray-900), var(--s2-gray-100));
-  color: light-dark(var(--s2-gray-50), var(--s2-gray-900));
+  background: light-dark(var(--s2-gray-800), var(--s2-gray-100));
+  color: light-dark(var(--s2-gray-50), var(--s2-gray-800));
 }
 
 .workbook-settings-save:hover {
@@ -108,7 +108,7 @@
 
 .workbook-settings-cancel {
   background: transparent;
-  color: light-dark(var(--s2-gray-900), var(--s2-gray-100));
+  color: light-dark(var(--s2-gray-800), var(--s2-gray-100));
   border-color: light-dark(var(--s2-gray-300), var(--s2-gray-700));
 }
 
@@ -118,7 +118,7 @@
 
 .workbook-settings-reset {
   background: transparent;
-  color: light-dark(var(--s2-gray-900), var(--s2-gray-100));
+  color: light-dark(var(--s2-gray-800), var(--s2-gray-100));
   border-color: light-dark(var(--s2-gray-300), var(--s2-gray-700));
 }
 
